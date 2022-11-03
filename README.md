@@ -82,6 +82,21 @@ On Local install `ansible`
 - It does not need to be the newest version
   - It is only used to bootstrap
 
+`.ssh/config.d/ansible.conf` might look as follows:
+
+	Host ansible
+		Hostname 192.168.0.1
+		User ansible
+
+which assumes, that you have follwing in `.ssh/config`:
+
+	include ~/.ssh/config.d/*.conf	
+
+> This is absolutely straight forward plain `ssh` basics.
+>
+> You should know this in advance.  If not, better get a bit more experienced.
+> As the real challenge is how to master Ansible, not how to use `ssh` properly!
+
 
 ## Usage
 
@@ -95,7 +110,8 @@ This will prompt for following details if needed:
 - The root password
 
 This is idempotent, so does no harm if you run it again.
-And if the machine already is setup, it will not prompt for anything.
+
+After the machine is setup, this step will not prompt for anything!
 
 
 ## Then
@@ -132,6 +148,15 @@ If you are happy with the letsencrypt setup type
 	make https
 
 This switches off `http` mode.
+
+
+## Missing parts
+
+What is missing?
+
+Well, your configuration, of course.  This must come from your Disaster Documentation.
+
+Usually (or best) in form of `git` repositories.  Because `git` does not leave open questions.
 
 
 ## FAQ
