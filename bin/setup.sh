@@ -12,19 +12,28 @@ stamp()
   printf '%(%Y%m%d-%H%M%S)T\n'
 }
 
-step-1() { ansible-playbook -i inventory/ansible playbooks/wait.yml; }
-step-2() { ssh-copy-id ansible; }
-step-3() { ssh ansible sudo true || ansible-playbook -i inventory/ansible playbooks/sudo.yml -K; }
-step-4() { ansible-playbook -i inventory/ansible playbooks/ansible.yml; }
-step-5() { ansible-playbook -i inventory/ansible playbooks/semaphore.yml; }
-step-6() { exit 0; }
+# Wait for the host
+o ansible-playbook -i inventory/ansible playbooks/wait.yml
 
-let n=0
-while	let n++
-	declare -f step-$n >/dev/null
-do
-	o step-$n
-done
+# Transfer our SSH credentials
+o ssh-copy-id ansible
 
-OOPS step $n missing
+# Setup sudo
+# Do it a way which also works for older local ansible variants
+x ssh ansible sudo true || o ansible-playbook -i inventory/ansible playbooks/sudo.yml -K
+
+# Install ansible
+# We need to do this here, because our local ansible may be too old
+o ansible-playbook -i inventory/ansible playbooks/ansible.yml
+
+# Create or update copy of this installation
+x ssh ansible git init git/ansible-setup
+o git push ansible:git/ansible-setup/.git HEAD:setup-branch
+o ssh ansible 'cd git/ansible-setup && git checkout -f master setup-branch'
+
+# Install all other recommended packages
+o ansible-playbook -i inventory/ansible playbooks/packages.yml
+
+# Install and setup semaphore
+o ansible-playbook -i inventory/ansible playbooks/semaphore.yml
 
