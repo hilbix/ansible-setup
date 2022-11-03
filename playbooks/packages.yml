@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  gather_facts: false
+  become: yes
+  
+  tasks:
+
+    - name: update everything
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install vim and others
+      apt:
+        name:
+          - etckeeper
+          - vim
+          - vim-scripts
+          - python3
+          - build-essential
+          - gawk
+          - psmisc
+        state: latest
+
+    - name: Make vim the default editor
+      apt:
+        name: nano
+        state: absent
+
