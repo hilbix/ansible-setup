@@ -21,7 +21,7 @@ Bootstrap of a server or VM to provide Ansible and Semaphore from scratch.
 
 On Local install `ansible`
 
-- probably with `sudo apt install ansible`
+- probably with `sudo apt install ansible make`
   - Perhaps this needs some more packages, I do not know, sorry.
 - It does not need to be the newest version
   - It is only used to bootstrap more easily
