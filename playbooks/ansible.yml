@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false
+  
+  tasks:
+    - name: As our local Ansible might be too old, install a current one
+      raw: apt install -y ansible
+
