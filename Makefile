@@ -22,7 +22,7 @@ all:
 	# Create or update copy of this installation
 	-ssh ansible git init git/ansible-setup
 	git push ansible:git/ansible-setup/.git HEAD:setup-branch
-	ssh ansible 'cd git/ansible-setup && git checkout -f master setup-branch'
+	ssh ansible 'cd git/ansible-setup && git checkout -B master setup-branch'
 	
 	# Install all other recommended packages
 	ansible-playbook -i inventory/ansible playbooks/packages.yml
