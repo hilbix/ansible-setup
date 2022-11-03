@@ -17,7 +17,7 @@
     - name: First thing to do is to install etckeeper
       raw: apt install -y etckeeper
 
-    - name: Now install root wrapper
+    - name: Then install sudo
       raw: apt install -y sudo
 
     - name: Allow current user to sudo
@@ -28,6 +28,9 @@
         mode: 0440
         create: yes
         validate: '/usr/sbin/visudo -cf %s'
+
+    - name: As our local Ansible might be too old, install a current one
+      raw: apt install -y ansible
 
     - name: Success
       pause:
