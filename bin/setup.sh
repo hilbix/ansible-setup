@@ -12,10 +12,10 @@ stamp()
   printf '%(%Y%m%d-%H%M%S)T\n'
 }
 
-step-1() { ssh-copy-id ansible; }
-step-2() { ssh ansible /bin/true; }
-step-3() { scp script/bootstrap.sh ansible:.bootstrap.sh; }
-step-4() { ssh -T ansible bash ./.bootstrap.sh; }
+step-1() { ansible-playbook -i inventory/ansible playbooks/wait.yml; }
+step-2() { ssh-copy-id ansible; }
+step-3() { ssh ansible sudo true || ansible-playbook -i inventory/ansible playbooks/setup.yml -K; }
+step-4() { exit 0; }
 
 let n=0
 while	let n++
