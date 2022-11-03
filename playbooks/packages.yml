@@ -1,8 +1,9 @@
 ---
-- hosts: localhost
+- hosts: all
   gather_facts: false
   become: yes
-  
+  delegate_to: localhost
+ 
   tasks:
 
     - name: update everything
