@@ -14,8 +14,10 @@ stamp()
 
 step-1() { ansible-playbook -i inventory/ansible playbooks/wait.yml; }
 step-2() { ssh-copy-id ansible; }
-step-3() { ssh ansible sudo true || ansible-playbook -i inventory/ansible playbooks/setup.yml -K; }
-step-4() { exit 0; }
+step-3() { ssh ansible sudo true || ansible-playbook -i inventory/ansible playbooks/sudo.yml -K; }
+step-4() { ansible-playbook -i inventory/ansible playbooks/ansible.yml; }
+step-5() { ansible-playbook -i inventory/ansible playbooks/semaphore.yml; }
+step-6() { exit 0; }
 
 let n=0
 while	let n++
