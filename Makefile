@@ -25,10 +25,10 @@ all:
 	ssh ansible 'cd git/ansible-setup && git checkout -B master setup-branch'
 	
 	# Install all other recommended packages
-	ansible-playbook -i inventory/ansible playbooks/packages.yml
+	ssh ansible ansible-playbook -i git/ansible-setup/inventory/localhost git/ansible-setup/playbooks/packages.yml
 	
 	# Install and setup semaphore
-	ansible-playbook -i inventory/ansible playbooks/semaphore.yml
+	ssh ansible ansible-playbook -i git/ansible-setup/inventory/localhost git/ansible-setup/playbooks/semaphore.yml
 
 https:
 	bin/https.sh
